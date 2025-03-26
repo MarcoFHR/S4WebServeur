@@ -17,7 +17,7 @@ class CarFactory extends Factory
     public function definition(): array
     {
         return [
-          "title" => fake()->name(),
+          "name" => fake()->name(),
           "brand" => fake()->name(),
             //
         ];

@@ -7,6 +7,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get(url: '/cars', action: [CarController::class, 'index'])->name(name: 'cars.index');
+Route::get(url: '/cars/{id}', action: [CarController::class, 'show'])->name(name: 'cars.show');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
