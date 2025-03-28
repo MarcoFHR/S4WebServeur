@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
-    public function index(): never {
+    public function index():  {
         $cars= Car::all();
         $cars = Car::select(columns: ['id','brand'])->get();
         dd(vars: $cars);
