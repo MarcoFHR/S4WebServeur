@@ -11,22 +11,43 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <table  class="w-full">
 
-                      <tr>
-                        <td>Title</td>
-                        <td>Description</td>
-                        <td>Year</td>
-                        <td>Price</td>
-                        <td>Author</td>
-                      </tr>
-                      @foreach($books as $book)
-                      <tr>
-                        <td>{{ $book->title }}</td>
-                        <td>{{ $book->description }}</td>
-                        <td>{{ $book->year }}</td>
-                        <td>{{ $book->price }}€</td>
-                        <td>{{ $book->author->name }}</td>
-                      </tr>
-                      @endforeach
+                      <thead>
+                        <tr>
+                          <th>Title</th>
+                          <th>Description</th>
+                          <th>Year</th>
+                          <th>Price</th>
+                          <th>Author</th>
+                          <th scope="col" class="px-6 py-3">
+                              <a class="btn-new ml-3 mb-2" href="{{ route('books.create')}}"
+                                title="{{ __('New') }}">{{ __('New') }}</a>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($books as $book)
+                        <tr>
+                          <td>{{ $book->title }}</td>
+                          <td>{{ $book->description }}</td>
+                          <td>{{ $book->year }}</td>
+                          <td>{{ $book->price }}€</td>
+                          <td>{{ $book->author->name }}</td>
+                          <td class="px-6 py-4 flex">
+                                              <a class="btn-std ml-3" href="{{ route('books.edit', $book) }}"
+                                                  title="{{ __('Edit') }}">Edit</a>
+                                              <a class="btn-danger ml-3" href=""
+                                              onclick="let response= confirm('Are you sure?'); event.preventDefault(); if(response) {document.querySelector('#delete-{{ $book->id}}').submit() }"
+                                              title="{{ __('Delete') }}">{{ __('Delete') }}</a>
+                                              <form id="delete-{{ $book->id }}" hidden
+                                                      action="{{ route('books.destroy', $book) }}" method="POST">
+                                                      @csrf
+                                                      @method('DELETE')
+                                                  </form>
+
+                          </td>
+                        </tr>
+                        @endforeach
+                      </tbody>
                     </table>
                     <div class"mt-4">
                       {{ $books->links() }}

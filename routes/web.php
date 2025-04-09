@@ -20,8 +20,8 @@ Route::get('/dashboard', function () {
 
 Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
 Route::get('/videos', [VideoController::class, 'index'])->name('videos.index');
-Route::get('/authors', [AuthorController::class, 'index'])->name('authors.index');
-Route::get('/books', [BookController::class, 'index'])->name('books.index');
+Route::resource('/authors', AuthorController::class);
+Route::resource('/books', BookController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

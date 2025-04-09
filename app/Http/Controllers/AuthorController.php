@@ -8,7 +8,8 @@ use App\Models\Author;
 class AuthorController extends Controller
 {
   public function index(){
-    $authors = Author::paginate(10);
+    $authors = Author::with('books')->paginate(10);
+
     //return view('video.index', ['videos' => $videos]);
     return view('authors.index', compact('authors'));
   }

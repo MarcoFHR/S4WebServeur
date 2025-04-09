@@ -22,9 +22,11 @@
                         <td>{{ $author->name }}</td>
                         <td>{{ $author->firstname }}</td>
                         <td>{{ $author->biography }}</td>
+                        <td>
                         @foreach($author->books as $book)
                           <p>{{ $book->title }}</p>
                         @endforeach
+                      </td>
                       </tr>
                       @endforeach
                     </table>
