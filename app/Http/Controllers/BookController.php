@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -56,6 +57,12 @@ class BookController extends Controller
     public function update(UpdateBookRequest $request, Book $book)
     {
         $book->update($request->validated());
+        if($book->image != null && Storage::exists($book->image) ){
+          Storage::delete($book->image);
+        }
+        $path = Storage::putFileAs('images', $request->file('image'), $book->title . '.jpg');
+        $book->image=$path;
+        $book->save();
         return redirect()->route('books.index');
     }
 
@@ -64,8 +71,10 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
+        if($book->image != null && Storage::exists($book->image) ){
+          Storage::delete($book->image);
+        }
         $book->delete();
-
         return redirect()->route('books.index');
     }
 

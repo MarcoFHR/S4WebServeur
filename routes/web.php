@@ -30,3 +30,17 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+
+/*
+  return (new Mail(Message)
+            ->
+
+  CONTACT Controller
+
+  $admins = User::where("role",...)
+
+  foreach...
+
+  mailhop
+*/

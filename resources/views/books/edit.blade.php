@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-zinc-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-zinc-900 dark:text-zinc-100">
-                    <form method="POST" action="{{ route('books.update', $book) }}">
+                    <form method="POST" action="{{ route('books.update', $book) }}" enctype="multipart/form-data">
                       @method('PUT')
                       @csrf
 
@@ -32,7 +32,7 @@
                         <!-- Image -->
                         <div class='mt-4'>
                             <x-input-label for="image" :value="__('Image')" />
-                            <x-text-input id="image" class="block mt-1 w-full" type="text" name="image" :value="old('image', $book->image)"
+                            <x-text-input id="image" class="block mt-1 w-full" type="file" name="image" :value="old('image', $book->image)"
                                 autocomplete="image" />
                             <x-input-error :messages="$errors->get('image')" class="mt-2" />
                         </div>

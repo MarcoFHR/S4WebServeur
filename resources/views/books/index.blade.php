@@ -15,6 +15,7 @@
                         <tr>
                           <th>Title</th>
                           <th>Description</th>
+                          <th>Image</th>
                           <th>Year</th>
                           <th>Price</th>
                           <th>Author</th>
@@ -29,6 +30,7 @@
                         <tr>
                           <td>{{ $book->title }}</td>
                           <td>{{ $book->description }}</td>
+                          <td><img src="{{ Storage::url($book->image) }}" alt="{{ $book->title }}"></td>
                           <td>{{ $book->year }}</td>
                           <td>{{ $book->price }}€</td>
                           <td>{{ $book->author->name }}</td>
