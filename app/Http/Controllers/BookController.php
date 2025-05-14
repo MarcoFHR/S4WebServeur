@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\User;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use Illuminate\Support\Facades\Storage;
+use App\Notifications\BookDeleted;
+use App\Notifications\BookOrVideoCreated;
 
 class BookController extends Controller
 {
@@ -30,8 +33,11 @@ class BookController extends Controller
 
   public function store(StoreBookRequest $request)
     {
-        Book::create($request->validated());
-
+        $book = Book::create($request->validated());
+        $users = User::all();
+        foreach($users as $user){
+          $user->notify(new BookOrVideoCreated($book));
+        }
         return redirect()->route('books.index')->withStatus('success')->withMessage('Store Success !');
     }
 
@@ -74,6 +80,8 @@ class BookController extends Controller
         if($book->image != null && Storage::exists($book->image) ){
           Storage::delete($book->image);
         }
+        logger($book->author->id);
+        $book->author->notify(new BookDeleted($book) );
         $book->delete();
         return redirect()->route('books.index');
     }
